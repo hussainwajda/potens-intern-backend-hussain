@@ -1,0 +1,12 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["sh", "-c", "node src/db/migrate.js && node src/server.js"]
